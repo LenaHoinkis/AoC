@@ -17,17 +17,7 @@ with open('data.txt', 'r') as file:
                 total += matrix[r + dr][c + dc]
         return total
 
-    #part1
-    accessable = 0
-    for i in range(1 , size+1):
-        for j in range(1, size+1):
-            if matrix[i][j]==1:
-                if neighborhood_sum(matrix,i,j)<5:
-                    accessable +=1
-    print(accessable)
-
-    #part2
-    def remove(matrix):
+    def find_accessable(matrix):
         accessable = []
         for i in range(1 , size+1):
             for j in range(1, size+1):
@@ -35,10 +25,14 @@ with open('data.txt', 'r') as file:
                     if neighborhood_sum(matrix,i,j)<5:
                         accessable.append((i,j))
         return accessable
-        
+
+    #part1
+    print(len(find_accessable(matrix)))
+
+    #part2
     result = 0
-    while (rolls := remove(matrix)):
-        result += len(rolls)
-        for i, j in rolls:
+    while (accessable := find_accessable(matrix)):
+        result += len(accessable)
+        for i, j in accessable:
             matrix[i][j]=0
     print(result)
